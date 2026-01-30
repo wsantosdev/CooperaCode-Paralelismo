@@ -6,8 +6,8 @@ namespace ConsoleApp
     {
         // Não injetado para simplificar o exemplo
         private readonly ReadOnlyCollection<IRegraValidacao> _regrasValidacao = [ new RegraNomeValido(), 
-                                                                    new RegraEmailValido(), 
-                                                                    new RegraCpfValido() ];
+                                                                                  new RegraEmailValido(), 
+                                                                                  new RegraCpfValido() ];
 
         public ReadOnlyCollection<Cliente> ValidarClientes(ReadOnlyCollection<Cliente> clientes)
         {
