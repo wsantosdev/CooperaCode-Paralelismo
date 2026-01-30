@@ -1,13 +1,17 @@
-﻿namespace ConsoleApp
+﻿using System.Collections.Concurrent;
+
+namespace ConsoleApp
 {
     public sealed class Cliente(string nome, string email, string cpf)
     {
-        public string Nome { get; init; } = nome;
+        public string Nome { get; } = nome;
                 
-        public string Email { get; init; } = email;
+        public string Email { get; } = email;
                 
-        public string Cpf { get; init; } = cpf;
+        public string Cpf { get; } = cpf;
 
-        public List<string> Erros { get; private init; } = new List<string>(3);
+        public ConcurrentBag<string> Erros { get; } = [];
+
+        public bool ContemErros => !Erros.IsEmpty;
     }
 }

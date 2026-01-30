@@ -34,7 +34,7 @@ namespace TestProject
 
             //Act
             var clientes = new List<Cliente> { cliente1, cliente2, cliente3, cliente4 };
-            var invalidos = ValidadorDeClientes.ValidarClientes(clientes);
+            var invalidos = new ValidadorDeClientes().ValidarClientes(clientes.AsReadOnly());
 
             //Assert
             Assert.Equal(3, invalidos.Count);

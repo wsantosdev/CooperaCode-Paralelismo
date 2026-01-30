@@ -1,6 +1,5 @@
 ﻿
 using ConsoleApp;
-using System.Diagnostics;
 
 var clientes = new List<Cliente>(10000);
 
@@ -38,7 +37,7 @@ for (int i = 0; i < 5000; i++)
     });
 }
 
-var clientesInvalidos = ValidadorDeClientes.ValidarClientes(clientes);
+var clientesInvalidos = new ValidadorDeClientes().ValidarClientes(clientes.AsReadOnly());
 
 Console.WriteLine($"Total de clientes: {clientes.Count}");
 Console.WriteLine($"Clientes inválidos: {clientesInvalidos.Count}");

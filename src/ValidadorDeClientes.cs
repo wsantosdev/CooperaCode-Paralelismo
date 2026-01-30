@@ -1,27 +1,24 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.ObjectModel;
 
 namespace ConsoleApp
 {
     public class ValidadorDeClientes
     {
-        public static List<Cliente> ValidarClientes(List<Cliente> clientes)
-        {
-            var clientesInvalidos = new List<Cliente>(clientes.Count);
+        // Não injetado para simplificar o exemplo
+        private readonly ReadOnlyCollection<IRegraValidacao> _regrasValidacao = [ new RegraNomeValido(), 
+                                                                    new RegraEmailValido(), 
+                                                                    new RegraCpfValido() ];
 
-            foreach(var cliente in clientes)
+        public ReadOnlyCollection<Cliente> ValidarClientes(ReadOnlyCollection<Cliente> clientes)
+        {
+            foreach (var cliente in clientes)
             {
-                if (string.IsNullOrEmpty(cliente.Nome) || cliente.Nome.Length < 2)
-                    cliente.Erros.Add("Nome inválido");
-                if (string.IsNullOrEmpty(cliente.Email) || !cliente.Email.Contains('@'))
-                    cliente.Erros.Add("Email inválido");
-                if (string.IsNullOrEmpty(cliente.Cpf) || cliente.Cpf.Length != 11)
-                    cliente.Erros.Add("CPF inválido");
-                
-                if (cliente.Erros.Count > 0)
-                    clientesInvalidos.Add(cliente);
+                //Desacopla as regras de validação do processo de validação
+                foreach (var regra in _regrasValidacao)
+                    regra.Validar(cliente);
             }
-            
-            return clientesInvalidos;
+
+            return [.. clientes.Where(c => c.ContemErros)];
         }
     }
 }
